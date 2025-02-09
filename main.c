@@ -14,27 +14,30 @@
 #include "./get_next_line/get_next_line.h"
 #include "./libft/libft.h"
 
-void    print(char **grid, size_t l, size_t w)
+void    show(char **grid, size_t l, size_t w)
 {
-    for (size_t i = 0; i < l; i++)
-    {
-        for (size_t j = 0; grid[i][j]; j++)
-        {
-            ft_putchar_fd(grid[i][j], 1);
-        }
-        ft_putendl_fd(0, 1);
-    }
+    // for (size_t i = 0; i < l; i++)
+    // {
+    //     for (size_t j = 0; grid[i][j]; j++)
+    //     {
+    //         ft_putchar_fd(grid[i][j], 1);
+    //     }
+    // }
 
 }
 
-void	initialization(char **grid, int fd)
+void	initialization(char **grid, int fd, int length)
 {
 	char	*line;
 	size_t	width;
-	size_t	length;
 	size_t	x;
 	size_t	y;
 
+    if (length < 0)
+        exit(1);
+    grid = malloc((length + 1) * sizeof(char *));
+    if (!grid)
+        exit(1);
 	y = 0;
 	while (1)
 	{
@@ -47,6 +50,26 @@ void	initialization(char **grid, int fd)
 	close(fd);
 }
 
+int     ft_length(char *file)
+{
+    int     fd;
+    int     length;
+    char    *line;
+
+    fd = open(file, O_RDONLY);
+    if (fd == -1)
+        return (-1);
+    length = 0;
+    while (1)
+    {
+        line = get_next_line(fd);
+        if (!line)
+            return (close(fd), length);
+        safe_free(&line);
+        ++length;
+    }
+    return (-42);
+}
 int main(int ac, char **av)
 {
     int     fd;
@@ -57,11 +80,11 @@ int main(int ac, char **av)
 
     if (ac != 2 )
         return (1);
-    length = 0;
-    fd = open(av[1], O_RDWR);
-    if (fd == -1)
-        return (perror("Error opening file\n"), 1);
-	initialization(grid, fd);
-    print(grid, length, width);
+    // length = 0;
+    // fd = open(av[1], O_RDWR);
+    // if (fd == -1)
+    //     return (perror("Error opening file\n"), 1);
+	initialization(grid, fd, ft_length(av[1]));
+    show(grid, length, width);
     return (0);
 }

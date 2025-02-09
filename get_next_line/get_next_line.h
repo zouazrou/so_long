@@ -2,13 +2,10 @@
 # define BUFFER_SIZE 10
 #endif
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include <unistd.h>
 
 size_t	ft_strlen(const char *s);
