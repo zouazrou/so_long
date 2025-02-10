@@ -1,0 +1,79 @@
+#include <iostream>
+#include <string>
+ 
+#define MAX 200000
+typedef struct 
+{
+    int     nb;
+    bool    op;
+} int_t ;
+using namespace std;
+ 
+// bool isFind(string name)
+// {
+// 	string ss = "us";
+// 	for (int i = 0; i < 3; i++)
+// 	{
+// 		if (name[i] != ss[i])
+// 			return (false);
+// 	}
+// 	return (true);
+// }
+
+// A --> n  (1 <= n <= MAX)
+// B --> m  (m = 0)
+
+int	main(void)
+{
+	int ac, m, n;
+    int_t  a[MAX], b[MAX];
+	string	name;
+	cin >> ac;
+	while (ac--)
+	{
+		cin >> n; cin >> m;
+        for (int i = 0; i < n; i++)
+        {
+            cin >> a[i].nb;
+            a[i].op = false;
+        }
+        for (int i = 0; i < m; i++)
+        {
+            cin >> b[i].nb;
+            b[i].op = false;
+        }
+        bool isSorted = true;
+        if (n != 1)
+        {
+            int r = n;
+            while (r)
+            {
+                for (int i = 1; i < n; i++)
+                {
+                    if (a[i-1].nb > a[i].nb && a[i-1].op == false)
+                    {
+                        a[i-1].nb = b[0].nb - a[i-1].nb;
+                        a[i-1].op = true;
+                    }
+                }
+                r--;
+            }
+            for (int i = 1; i < n; i++)
+            {
+                if (a[i-1].nb > a[i].nb)
+                {
+                    isSorted = false;
+                    break;
+                }
+            }
+            // if (isSorted == true)
+            //     cout << "YES\n";
+            // else
+            //     cout << "NO\n";
+        }
+        if (isSorted == true)cout << "YES\n";
+        else cout << "NO\n";
+	}
+	return (0);
+}
+
