@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:45 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/10 12:12:37 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:50:56 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,17 @@ int main(int ac, char **av)
     if (fd == -1)
         return (perror("Error opening file\n"), 1);
 	length = ft_length(av[1]);
+	if (length < 3)
+		return (perror("Error : lenght of map is less then 3"), 1);
 	grid = malloc((length + 1) * sizeof(char *));
 	if (!grid)
 		return (1);
 	initialization(grid, fd, length);
+	show(grid, length);
 	if (true == isvalidsize(grid, length))
-		printf("is valid map\n");
+		printf("\nis valid map\n");
 	else
-		perror("Error : map is not valid\n");
-    show(grid, length);
+		perror("Error : map is not valid");
 	free_grid(&grid, length);
-    return (0);
+	return (0);
 }
