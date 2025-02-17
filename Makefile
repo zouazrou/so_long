@@ -6,7 +6,7 @@ NAME = so_long
 all : $(NAME)
 
 $(NAME) :
-	$(CC) -g utils.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c ./libft/libft.a main.c -o $(NAME)
+	$(CC) -g get_next_line/*.c libft/libft.a game.c utils.c main.c -L./minilibx-linux -lmlx_Linux -I./minilibx-linux -lXext -lX11 -lm -lz -o $(NAME)
 
 clean :
 	rm $(NAME)
