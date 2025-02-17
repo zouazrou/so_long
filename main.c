@@ -21,22 +21,24 @@ void    show(char **grid, size_t l)
 
 }
 
-void	initialization(char **grid, int fd, int length)
+void	initialization(t_map *map, int fd, int length)
 {
 	char	*line;
-	size_t	width;
-	size_t	x;
-	size_t	y;
+	int		width;
+	int		y;
 
 	y = 0;
+	map->e = 0;
+	map->c = 0;
+	map->p = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break;
-		grid[y++] = line;
+		map->grid[y++] = line;
 	}
-	grid[y] = NULL;
+	map->grid[y] = NULL;
 	close(fd);
 }
 
@@ -48,7 +50,7 @@ int     ft_length(char *file)
 
     fd = open(file, O_RDONLY);
     if (fd == -1)
-        return (-1);
+        exit ((close(fd), perror("Error : something wrong in function open"), 1));
     length = 0;
     while (1)
     {
@@ -73,26 +75,28 @@ int main(int ac, char **av)
     size_t  length;
     size_t  width;
     char    *line;
-    char    **grid;
+	t_map	map;
 
     if (ac != 2 )
         return (1);
-    length = 0;
     fd = open(av[1], O_RDWR);
     if (fd == -1)
         return (perror("Error opening file\n"), 1);
 	length = ft_length(av[1]);
 	if (length < 3)
 		return (perror("Error : lenght of map is less then 3"), 1);
-	grid = malloc((length + 1) * sizeof(char *));
-	if (!grid)
+	
+	map.grid = malloc((length + 1) * sizeof(char *));
+	if (!map.grid)
 		return (1);
-	initialization(grid, fd, length);
-	show(grid, length);
-	if (true == isvalidsize(grid, length))
-		printf("\nis valid map\n");
-	else
-		perror("Error : map is not valid");
-	free_grid(&grid, length);
+	initialization(&map, fd, length);
+	show(map.grid, length);
+	is_valid_map(&map, length);
+	// if (true == is_valid_map(&map, length))
+	// 	printf("\nis valid map\n");
+	// else
+	// 	perror("Error : map is not valid");
+	free_grid(&map.grid, length);
 	return (0);
 }
+// gcc test.c -L./minilibx-linux -lmlx -lX11 -lXext -lm -o tes

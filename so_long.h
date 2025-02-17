@@ -25,7 +25,18 @@
 #include "./libft/libft.h"
 #include "./get_next_line/get_next_line.h"
 
+typedef struct s_map
+{
+    char    **grid;
+    int     length;
+    int     width;
+    int     p;
+    int     c;
+    int     e;
+}               t_map;
+
 bool	isvalidsize(char **grid, int length);
+bool	is_valid_map(t_map *map, int length);
 void	safe_free(char **ptr);
 
 #endif

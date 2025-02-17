@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "so_long.h"
+
 bool is_valid_wall(char *row, int len, bool edge_map)
 {
 	int	i;
@@ -22,7 +23,7 @@ bool is_valid_wall(char *row, int len, bool edge_map)
 	i = 0;
 	while (i < len)
 	{
-		if (row[i++] != '1')
+		if (edge_map == true || row[i++] != '1')
 			return (false);
 	}
 	return (true);
@@ -33,14 +34,26 @@ bool	isvalidsize(char **grid, int length)
 	int	width;
 
 	width = ft_strlen(grid[0]);
+	i = 0;
+}
+
+bool	is_valid_map(t_map *map, int length)
+{
+	int width;
+	int	i;
+
+	width = ft_strlen(map->grid[0]);
+	i = 0;
 	if (width < 4)
 		return (false);
-	i = 0;
 	while (i < length)
 	{
-		if (ft_strlen(grid[i]) != width || !is_valid_wall(grid[i], width - 1, (i == 0 || i == length - 1)))
+		if (ft_strlen(grid[i]) != width )
+			return (false);
+		if (!is_valid_wall(grid[i], width - 1, (i == 0 || i == length - 1)))
 			return (false);
 		++i;
 	}
 	return (true);
+	
 }
