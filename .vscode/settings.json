@@ -5,6 +5,14 @@
 		"redimi": "cpp",
 		"bitset": "c",
 		"string_view": "c",
-		"mlx.h": "c"
+		"mlx.h": "c",
+		"so_long.h": "c",
+		"ft_printf.h": "c",
+		"stdlib.h": "c",
+		"get_next_line.h": "c",
+		"libft.h": "c",
+		"mlx_int.h": "c",
+		"map": "c",
+		"format": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:49 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/17 17:39:12 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:03:16 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,38 +24,55 @@
 #include <math.h>
 #include <errno.h>
 
-#include "./libft/libft.h"
 #include "./get_next_line/get_next_line.h"
+#include "./libft/libft.h"
 
-typedef struct s_img
+typedef	struct s_coord
 {
-	void	*img_ptr;
-}			t_img;
+	int	x;
+	int	y;
+}		t_coord;
 
-typedef struct s_map
+typedef struct s_info
+{
+	void	*img;
+	t_coord	coord;
+	int		amount;
+}			t_info;
+
+typedef struct s_game
 {
     char    **grid;
     int     length;
     int     width;
-    int     p;
-    int     c;
-    int     e;
 	void	*mlx;
 	void	*win;
-	t_img	wall;
-	t_img	player;
-	t_img	exit;
-	t_img	background;
-	t_img	collectible;
-}               t_map;
+	int		moves;
+	bool	on_exit;
+	t_info	wall;
+	t_info	player;
+	t_info	exit;
+	t_info	empty;
+	t_info	coll;
+}               t_game;
 
 #define SIZE 64
 
-bool	isvalidsize(char **grid, int length);
-bool	is_valid_map(t_map *map);
-void	safe_free(char **ptr);
+//
+bool	is_exit(t_game *map, int x, int y);
+bool	is_empty_sp(t_game *map, int x, int y);
+bool	is_wall(t_game *map, int x, int y);
+bool	is_coll(t_game *map, int x, int y);
+bool	is_player(t_game *map, int x, int y);
 
+//
+bool	isvalidsize(char **grid, int length);
+bool	is_valid_map(t_game *map);
+void	safe_free(char **ptr);
+int	keyboard(int keysym, t_game *map);
+void	free_grid(char ***grid, int length);
+void	destroy_all(t_game *map, bool err);
 // game...
-bool	game(t_map *map);
+bool	game(t_game *map);
 
 #endif
