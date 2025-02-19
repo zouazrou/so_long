@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:49 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/18 15:03:16 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:15:51 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_game
 	void	*mlx;
 	void	*win;
 	int		moves;
-	bool	on_exit;
 	t_info	wall;
 	t_info	player;
 	t_info	exit;
@@ -69,10 +68,13 @@ bool	is_player(t_game *map, int x, int y);
 bool	isvalidsize(char **grid, int length);
 bool	is_valid_map(t_game *map);
 void	safe_free(char **ptr);
-int	keyboard(int keysym, t_game *map);
+int		keyboard(int keysym, t_game *map);
 void	free_grid(char ***grid, int length);
 void	destroy_all(t_game *map, bool err);
 // game...
 bool	game(t_game *map);
+
+//
+void	do_op(t_game *map, char direction);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:52 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/18 13:56:09 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:15:35 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool is_valid_row(t_game *map, int index, int len, bool edge_map)
 		else if (row[i] == 'P')
 			(map->player.coord.x = i), (map->player.coord.y = index), (map->player.amount++);
 		else if (row[i] == 'E')
-			map->exit.amount++;
+			(map->exit.coord.x = i), (map->exit.coord.y = index), (map->exit.amount++);
 		else if (row[i] == 'C')
 			map->coll.amount++;
 		else
@@ -47,7 +47,6 @@ bool	is_valid_map(t_game *map)
 	int	i;
 
 	i = -1;
-	map->on_exit = false;
 	map->width = ft_strlen(map->grid[0]) - 1;
 	if (map->width < 3)
 		return (false);

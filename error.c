@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:19:38 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/18 15:04:01 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:10:49 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,10 @@ void	destroy_all(t_game *map, bool err)
 	exit(0);
 }
 
-// void	handling_errors(t_game *map, int type, bool err)
-// {
-// 	free_grid(&map->grid, map->length);
-// 	if (err == false)
-// 		exit (0);
-// 	perror("Error :");
-// 	if (type == 1)
-// 	if (err == true)
-// 		exit(1);
-// }
+void	free_grid(char ***grid, int length)
+{
+	for (int i = length; i >= 0; i--)
+		safe_free(&(*grid)[i]);
+	free(*grid);
+	*grid = NULL;
+}

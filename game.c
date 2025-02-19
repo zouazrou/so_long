@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:13:01 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/18 15:02:33 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:57:45 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,18 @@ int	keyboard(int keysym, t_game *map)
 {
 	static int	moves;
 
-	ft_putnbr_fd(++moves, 1);
-	ft_putendl_fd("", 1);
+	// ft_putnbr_fd(++moves, 1);
+	// ft_putendl_fd("", 1);
 	if (keysym == XK_Escape)
 		destroy_all(map, false);
+	else if (keysym == XK_Up || keysym == XK_w)
+		do_op(map, 'u');
+	else if (keysym == XK_Down || keysym == XK_s)
+		do_op(map, 'd');
+	else if (keysym == XK_Right || keysym == XK_d)
+		do_op(map, 'r');
+	else if (keysym == XK_Left || keysym == XK_a)
+		do_op(map, 'l');
 	return (0);
 }
 void	display_game(t_game *map)
@@ -90,26 +98,21 @@ bool	game(t_game *map)
 		free(map->mlx);
 		return (false);
 	}
-	map->wall.img = mlx_new_image(map->mlx, SIZE, SIZE);
+	map->wall.img = mlx_xpm_file_to_image(map->mlx, "./textures/wall.xpm", &x, &y);
 	if (!map->wall.img)
 		return (false);
-	map->coll.img = mlx_new_image(map->mlx, SIZE, SIZE);
+	map->coll.img = mlx_xpm_file_to_image(map->mlx, "./textures/coll.xpm", &x, &y);
 	if (!map->coll.img)
 		return (false);
-	map->player.img = mlx_new_image(map->mlx, SIZE, SIZE);
+	map->player.img = mlx_xpm_file_to_image(map->mlx, "./textures/player.xpm", &x, &y);
 	if (!map->player.img)
 		return (false);
-	map->empty.img = mlx_new_image(map->mlx, SIZE, SIZE);
+	map->empty.img = mlx_xpm_file_to_image(map->mlx, "./textures/Brown.xpm", &x, &y);
 	if (!map->empty.img)
 		return (false);
-	map->exit.img = mlx_new_image(map->mlx, SIZE, SIZE);
+	map->exit.img = mlx_xpm_file_to_image(map->mlx, "./textures/exit.xpm", &x, &y);
 	if (!map->exit.img)
 		return (false);
-	map->wall.img = mlx_xpm_file_to_image(map->mlx, "./textures/wall.xpm", &x, &y);
-	map->coll.img = mlx_xpm_file_to_image(map->mlx, "./textures/coll.xpm", &x, &y);
-	map->player.img = mlx_xpm_file_to_image(map->mlx, "./textures/player.xpm", &x, &y);
-	map->empty.img = mlx_xpm_file_to_image(map->mlx, "./textures/Brown.xpm", &x, &y);
-	map->exit.img = mlx_xpm_file_to_image(map->mlx, "./textures/exit.xpm", &x, &y);
 	display_game(map);
 	mlx_key_hook(map->win, keyboard, map);
 	mlx_loop(map->mlx);

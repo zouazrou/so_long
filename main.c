@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:45 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/18 15:00:25 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:43:47 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,7 @@ int     ft_length(char *file)
     return (-42);
 }
 
-void	free_grid(char ***grid, int length)
-{
-	for (int i = length; i >= 0; i--)
-		safe_free(&(*grid)[i]);
-	free(*grid);
-	*grid = NULL;
-}
+
 
 int main(int ac, char **av)
 {
@@ -128,7 +122,6 @@ int main(int ac, char **av)
 	initialization(&map, fd);
 	if (false == is_valid_map(&map))
 		perror("Error : map is not valid\n");
-	// game
 	game(&map);
 	return (0);
 }

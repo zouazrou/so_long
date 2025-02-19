@@ -6,36 +6,66 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:15:43 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/18 15:11:07 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:57:18 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-/*
--->achno dart db :
-	adding another member inside my struct "on exit"
--->achno khasni ndir db :
-	you must be handling if new coord is wall or empty sp or coll or exit ...
-
-*/
-void	up(t_game *map)
+void	do_move(t_game *map, t_coord curr, t_coord new)
 {
-	t_coord	new_crd;
+	ft_putnbr_fd(++map->moves, 1);
+	ft_putchar_fd('\n', 1);
+	mlx_put_image_to_window(map->mlx, map->win, map->player.img, new.x * SIZE, new.y * SIZE);
+	map->grid[new.y][new.x] = 'P';
+	if (map->player.coord.x == map->exit.coord.x && map->player.coord.y == map->exit.coord.y)
+	{
+		mlx_put_image_to_window(map->mlx, map->win, map->exit.img, curr.x * SIZE, curr.y * SIZE);
+		map->grid[curr.y][curr.x] = 'E';
+		map->player.coord = new;
+		return ;
+	}
+	mlx_put_image_to_window(map->mlx, map->win, map->empty.img, curr.x * SIZE, curr.y * SIZE);
+	map->grid[curr.y][curr.x] = '0';
+	map->player.coord = new;
+}
 
-	new_crd = map->player.coord;
-	new_crd.y++;
-	if (is_coll(map, new_crd.x, new_crd.y))
+void	move(t_game *map, t_coord new)
+{
+	t_coord	curr;
+
+	curr = map->player.coord;
+	if (is_coll(map, new.x, new.y))
+	{
 		map->coll.amount--;
-	else if (is_exit(map, new_crd.x, new_crd.y))
-	
+		do_move(map, curr, new);
+	}
+	else if (is_empty_sp(map, new.x, new.y))
+	{
+		do_move(map, curr, new);
+	}
+	else if (is_exit(map, new.x, new.y))
+	{
+		if (!map->coll.amount)
+		{
+			ft_putstr_fd("Gg!\n", 1);
+			destroy_all(map, false);
+		}
+		do_move(map, curr, new);
+	}
 }
 void	do_op(t_game *map, char direction)
 {
+	t_coord	new;
+
+	new = map->player.coord;
 	if (direction == 'u')
-		up(map);
-	// else if (direction == 'u')
-	// else if (direction == 'u')
-	// else if (direction == 'u')
-	// else
+		new.y--;
+	else if (direction == 'd')
+		new.y++;
+	else if (direction == 'r')
+		new.x++;
+	else if (direction == 'l')
+		new.x--;
+	move(map, new);
 }
