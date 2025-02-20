@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:52 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/19 16:15:35 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/20 09:57:11 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,25 @@ bool	is_valid_map(t_game *map)
 	if (map->player.amount != 1 || map->exit.amount != 1 || map->coll.amount == 0)
 		return (false);
 	return (true);
+}
+
+int     ft_length(char *file)
+{
+    int     fd;
+    int     length;
+    char    *line;
+
+    fd = open(file, O_RDONLY);
+    if (fd == -1)
+        exit ((perror("Error : something wrong in function open"), 1));
+    length = 0;
+    while (1)
+    {
+        line = get_next_line(fd);
+        if (!line)
+            return (close(fd), length);
+        safe_free(&line);
+        ++length;
+    }
+    return (-42);
 }

@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:45 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/19 16:43:47 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/20 10:00:18 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,29 +78,6 @@ void	initialization(t_game *map, int fd)
 	close(fd);
 }
 
-int     ft_length(char *file)
-{
-    int     fd;
-    int     length;
-    char    *line;
-
-    fd = open(file, O_RDONLY);
-    if (fd == -1)
-        exit ((perror("Error : something wrong in function open"), 1));
-    length = 0;
-    while (1)
-    {
-        line = get_next_line(fd);
-        if (!line)
-            return (close(fd), length);
-        safe_free(&line);
-        ++length;
-    }
-    return (-42);
-}
-
-
-
 int main(int ac, char **av)
 {
     int     fd;
@@ -122,8 +99,7 @@ int main(int ac, char **av)
 	initialization(&map, fd);
 	if (false == is_valid_map(&map))
 		perror("Error : map is not valid\n");
-	game(&map);
+	if (game(&map) == false)
+		exit((perror("Error : "), 1));
 	return (0);
 }
-
-// gcc test.c -L./minilibx-linux -lmlx -lX11 -lXext -lm -o tes

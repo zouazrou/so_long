@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:49 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/19 16:15:51 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:01:17 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_game
 	t_info	coll;
 }               t_game;
 
-#define SIZE 64
+#define SIZE 32
 
 //
 bool	is_exit(t_game *map, int x, int y);
@@ -65,6 +65,7 @@ bool	is_coll(t_game *map, int x, int y);
 bool	is_player(t_game *map, int x, int y);
 
 //
+int     ft_length(char *file);
 bool	isvalidsize(char **grid, int length);
 bool	is_valid_map(t_game *map);
 void	safe_free(char **ptr);

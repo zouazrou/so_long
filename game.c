@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:13:01 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/19 16:57:45 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:57:21 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ void	display_game(t_game *map)
 		x = 0;
 		while (x < map->width)
 		{
+			mlx_put_image_to_window(map->mlx, map->win, map->empty.img, x * SIZE, y * SIZE);
 			if (is_wall(map, x, y))
 				mlx_put_image_to_window(map->mlx, map->win, map->wall.img, x * SIZE, y * SIZE);
 			else if (is_player(map, x, y))
-				mlx_put_image_to_window(map->mlx, map->win, map->player.img, x * SIZE, y * SIZE);
+				(mlx_put_image_to_window(map->mlx, map->win, map->player.img, x * SIZE, y * SIZE));
 			else if (is_coll(map, x, y))
 				mlx_put_image_to_window(map->mlx, map->win, map->coll.img, x * SIZE, y * SIZE);
 			else if (is_exit(map, x, y))
@@ -82,6 +83,7 @@ void	display_game(t_game *map)
 		y++;
 	}
 }
+
 
 bool	game(t_game *map)
 {
@@ -105,9 +107,10 @@ bool	game(t_game *map)
 	if (!map->coll.img)
 		return (false);
 	map->player.img = mlx_xpm_file_to_image(map->mlx, "./textures/player.xpm", &x, &y);
+	// (printf("%d | %d\n", x, y));
 	if (!map->player.img)
 		return (false);
-	map->empty.img = mlx_xpm_file_to_image(map->mlx, "./textures/Brown.xpm", &x, &y);
+	map->empty.img = mlx_xpm_file_to_image(map->mlx, "./textures/bg.xpm", &x, &y);
 	if (!map->empty.img)
 		return (false);
 	map->exit.img = mlx_xpm_file_to_image(map->mlx, "./textures/exit.xpm", &x, &y);
