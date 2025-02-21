@@ -1,8 +1,8 @@
 /* XPM */
-static char *world_tileset1740059796[] = {
+static char *bg1740130273[] = {
 /* columns rows colors chars-per-pixel */
 "32 32 2 1 ",
-"  c #838BA9",
+"  c #8C93AB",
 ". c #FEFEFE",
 /* pixels */
 "                                ",

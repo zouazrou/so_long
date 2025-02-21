@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:15:43 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/19 16:57:18 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:17:49 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	move(t_game *map, t_coord new)
 		if (!map->coll.amount)
 		{
 			ft_putstr_fd("Gg!\n", 1);
-			destroy_all(map, false);
+			destroy_all(map, 0);
 		}
 		do_move(map, curr, new);
 	}

@@ -6,14 +6,33 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:19:38 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/19 16:10:49 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:01:54 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+bool	check_path(char **grid, int l, int w)
+{
+	int	y;
+	int	x;
 
-void	destroy_all(t_game *map, bool err)
+	y = 0;
+	while (y < l)
+	{
+		x = 0;
+		while (x < w)
+		{
+			if (grid[y][x] == 'E' || grid[y][x] == 'C')
+				return (false);
+			x++;
+		}
+		y++;
+	}
+	return (true);
+}
+
+void	destroy_all(t_game *map, int err)
 {
 	if (map->wall.img)
 		mlx_destroy_image(map->mlx, map->wall.img);
@@ -32,16 +51,31 @@ void	destroy_all(t_game *map, bool err)
 		mlx_destroy_display(map->mlx);
 		free(map->mlx);
 	}
-	free_grid(&map->grid, map->length);
-	if (err == true)
+	if (map->grid)
+		free_grid(&map->grid, map->length);
+	if (err == 1)
+		exit ((perror("Error :"), 1));
+	if (err == 2)
 		exit (1);
 	exit(0);
 }
 
 void	free_grid(char ***grid, int length)
 {
-	for (int i = length; i >= 0; i--)
-		safe_free(&(*grid)[i]);
-	free(*grid);
+	int	i;
+
+	i = length;
+	while (i >= 0)
+		safe_free(&(*grid)[i--]);
+	free	(*grid);
 	*grid = NULL;
 }
+
+// void	handling_errors(t_game *map, char *str, int err)
+// {
+	// free_grid(&map->grid, map->length);
+// 	destroy_all(map);
+// 	if (err = 1)
+// 		exit ((ft_putstr_fd(str, 2), 1));
+// 	exit(0);
+// }

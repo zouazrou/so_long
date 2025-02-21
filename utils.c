@@ -6,11 +6,22 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:52 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/20 09:57:11 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/21 20:49:06 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	flood_fill(char **grid, int x, int y)
+{
+	if (grid[y][x] == '1' || grid[y][x] == 'X')
+		return ;
+	grid[y][x] = 'X';
+	flood_fill(grid, x + 1, y);
+	flood_fill(grid, x - 1, y);
+	flood_fill(grid, x, y + 1);
+	flood_fill(grid, x, y - 1);
+}
 
 bool is_valid_row(t_game *map, int index, int len, bool edge_map)
 {
@@ -42,7 +53,7 @@ bool is_valid_row(t_game *map, int index, int len, bool edge_map)
 	return (true);
 }
 
-bool	is_valid_map(t_game *map)
+bool	is_valid_map(t_game *map, char ***gg)
 {
 	int	i;
 
@@ -60,6 +71,9 @@ bool	is_valid_map(t_game *map)
 			return (false);
 	}
 	if (map->player.amount != 1 || map->exit.amount != 1 || map->coll.amount == 0)
+		return (false);
+	flood_fill(*gg, map->player.coord.x, map->player.coord.y);
+	if (check_path(*gg, map->length, map->width) == false)
 		return (false);
 	return (true);
 }

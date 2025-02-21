@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:45 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/20 10:00:18 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/21 21:12:33 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void    show(t_game *map)
 	ft_putnbr_fd(map->width, 1);
 	ft_putendl_fd("", 1);
 }
-// "map.ter" 7 - 4
-// 3
+
 bool	check_extension(char *filename)
 {
 	char	*extension;
@@ -49,13 +48,9 @@ bool	check_extension(char *filename)
 		return (false);
 	return (true);
 }
-void	initialization(t_game *map, int fd)
-{
-	char	*line;
-	int		width;
-	int		y;
 
-	y = 0;
+void	init_fields(t_game *map)
+{
 	map->moves = 0;
 	map->player.amount = 0;
 	map->coll.amount = 0;
@@ -67,13 +62,27 @@ void	initialization(t_game *map, int fd)
 	map->exit.img = NULL;
 	map->mlx = NULL;
 	map->win = NULL;
+}
+
+
+void	init_map(t_game *map, char ***gg, int fd)
+{
+	char	*line;
+	char	**grid;
+	int		width;
+	int		y;
+
+	init_fields(map);
+	y = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break;
+		(*gg)[y] = ft_strdup(line);
 		map->grid[y++] = line;
 	}
+	(*gg)[y] = NULL;	
 	map->grid[y] = NULL;
 	close(fd);
 }
@@ -81,6 +90,7 @@ void	initialization(t_game *map, int fd)
 int main(int ac, char **av)
 {
     int     fd;
+	char	**gg;
 	t_game	map;
 
     if (ac != 2 )
@@ -93,13 +103,17 @@ int main(int ac, char **av)
 	map.length = ft_length(av[1]);
 	if (map.length < 3)
 		return (close(fd), perror("Error : lenght of map is less then 3"), 1);
+	gg = malloc((map.length + 1) * sizeof(char *));
+	if (!gg)
+		return (close(fd), 1);
 	map.grid = malloc((map.length + 1) * sizeof(char *));
 	if (!map.grid)
-		return (close(fd), 1);
-	initialization(&map, fd);
-	if (false == is_valid_map(&map))
-		perror("Error : map is not valid\n");
+		return (free_grid(&gg, map.length), close(fd), 1);
+	init_map(&map, &gg, fd);
+	if (false == is_valid_map(&map, &gg))
+		exit ((ft_putendl_fd("Error : map is not valid", 2), 1));
+	free_grid(&gg, map.length);
 	if (game(&map) == false)
-		exit((perror("Error : "), 1));
+		exit((destroy_all(&map, true),perror("Error : "), 1));
 	return (0);
 }
