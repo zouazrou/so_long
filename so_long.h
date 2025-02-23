@@ -6,32 +6,31 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:49 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/21 20:49:38 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:26:10 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include <stdio.h> // remove when finish
+# include "./get_next_line/get_next_line.h"
+# include "./libft/libft.h"
+# include "minilibx-linux/mlx.h"
+# include <X11/keysym.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <stdbool.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-#include "minilibx-linux/mlx.h"
-#include <X11/keysym.h>
-#include <stdbool.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <math.h>
-#include <errno.h>
+# define PERROR 1
+# define MAP 2
 
-#include "./get_next_line/get_next_line.h"
-#include "./libft/libft.h"
-
-typedef	struct s_coord
+typedef struct s_coord
 {
-	int	x;
-	int	y;
-}		t_coord;
+	int		x;
+	int		y;
+}			t_coord;
 
 typedef struct s_info
 {
@@ -42,9 +41,9 @@ typedef struct s_info
 
 typedef struct s_game
 {
-    char    **grid;
-    int     length;
-    int     width;
+	char	**grid;
+	int		length;
+	int		width;
 	void	*mlx;
 	void	*win;
 	int		moves;
@@ -53,32 +52,26 @@ typedef struct s_game
 	t_info	exit;
 	t_info	empty;
 	t_info	coll;
-}               t_game;
+}			t_game;
 
-#define SIZE 32
-
-//
-bool	is_exit(t_game *map, int x, int y);
-bool	is_empty_sp(t_game *map, int x, int y);
-bool	is_wall(t_game *map, int x, int y);
-bool	is_coll(t_game *map, int x, int y);
-bool	is_player(t_game *map, int x, int y);
+# define SIZE 32
 
 //
-int     ft_length(char *file);
-bool	isvalidsize(char **grid, int length);
-bool	is_valid_map(t_game *map, char ***gg);
-void	safe_free(char **ptr);
-int		keyboard(int keysym, t_game *map);
-void	free_grid(char ***grid, int length);
-void	destroy_all(t_game *map, int err);
-void	flood_fill(char **grid, int x, int y);
-bool	check_path(char **grid, int l, int w);
+bool		is_exit(t_game *map, int x, int y);
+bool		is_empty_sp(t_game *map, int x, int y);
+bool		is_wall(t_game *map, int x, int y);
+bool		is_coll(t_game *map, int x, int y);
+bool		is_player(t_game *map, int x, int y);
 
-// game...
-bool	game(t_game *map);
-
-//
-void	do_op(t_game *map, char direction);
+int			ft_length(char *file);
+bool		is_valid_map(t_game *map, char ***gg);
+void		safe_free(char **ptr);
+int			keyboard(int keysym, t_game *map);
+void		free_grid(char ***grid, int length);
+void		destroy_all(t_game *map, int err);
+void		flood_fill(char **grid, int x, int y);
+bool		check_path(char **grid, int l, int w);
+void		do_op(t_game *map, char direction);
+void		game(t_game *map);
 
 #endif

@@ -6,76 +6,71 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:13:01 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/21 12:10:00 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:00:51 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-
-bool	is_wall(t_game *map, int x, int y)
+bool	init_img_2(t_game *map)
 {
-	return (map->grid[y][x] == '1');
-}
+	int	x;
+	int	y;
 
-bool	is_player(t_game *map, int x, int y)
-{
-	return (map->grid[y][x] == 'P');
-}
-
-bool	is_coll(t_game *map, int x, int y)
-{
-	return (map->grid[y][x] == 'C');
-}
-
-bool	is_exit(t_game *map, int x, int y)
-{
-	return (map->grid[y][x] == 'E');
-}
-
-bool	is_empty_sp(t_game *map, int x, int y)
-{
-	return (map->grid[y][x] == '0');
-}
-
-int	keyboard(int keysym, t_game *map)
-{
-	static int	moves;
-
-	if (keysym == XK_Escape)
-		destroy_all(map, false);
-	else if (keysym == XK_Up || keysym == XK_w)
-		do_op(map, 'u');
-	else if (keysym == XK_Down || keysym == XK_s)
-		do_op(map, 'd');
-	else if (keysym == XK_Right || keysym == XK_d)
-		do_op(map, 'r');
-	else if (keysym == XK_Left || keysym == XK_a)
-		do_op(map, 'l');
-	return (0);
+	map->coll.img = mlx_xpm_file_to_image(map->mlx, "./textures/coll.xpm", &x,
+			&y);
+	if (!map->coll.img)
+		return (false);
+	map->player.img = mlx_xpm_file_to_image(map->mlx, "./textures/player1.xpm",
+			&x, &y);
+	if (!map->player.img)
+		return (false);
+	map->empty.img = mlx_xpm_file_to_image(map->mlx, "./textures/bg.xpm", &x,
+			&y);
+	if (!map->empty.img)
+		return (false);
+	map->exit.img = mlx_xpm_file_to_image(map->mlx, "./textures/exit.xpm", &x,
+			&y);
+	if (!map->exit.img)
+		return (false);
+	return (true);
 }
 
 bool	init_img(t_game *map)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
-	map->wall.img = mlx_xpm_file_to_image(map->mlx, "./textures/wall.xpm", &x, &y);
+	map->mlx = mlx_init();
+	if (!map->mlx)
+		return (false);
+	map->win = mlx_new_window(map->mlx, map->width * SIZE, map->length * SIZE,
+			"so_long");
+	if (!map->win)
+		return (false);
+	map->wall.img = mlx_xpm_file_to_image(map->mlx, "./textures/wall.xpm", &x,
+			&y);
 	if (!map->wall.img)
 		return (false);
-	map->coll.img = mlx_xpm_file_to_image(map->mlx, "./textures/coll.xpm", &x, &y);
-	if (!map->coll.img)
-		return (false);
-	map->player.img = mlx_xpm_file_to_image(map->mlx, "./textures/player1.xpm", &x, &y);
-	if (!map->player.img)
-		return (false);
-	map->empty.img = mlx_xpm_file_to_image(map->mlx, "./textures/bg.xpm", &x, &y);
-	if (!map->empty.img)
-		return (false);
-	map->exit.img = mlx_xpm_file_to_image(map->mlx, "./textures/exit.xpm", &x, &y);
-	if (!map->exit.img)
-		return (false);
-	return (true);
+	return (init_img_2(map));
+}
+
+void	mlx_put_images(t_game *map, int x, int y)
+{
+	mlx_put_image_to_window(map->mlx, map->win, map->empty.img, x
+		* SIZE, y * SIZE);
+	if (is_wall(map, x, y))
+		mlx_put_image_to_window(map->mlx, map->win, map->wall.img, x
+			* SIZE, y * SIZE);
+	else if (is_player(map, x, y))
+		(mlx_put_image_to_window(map->mlx, map->win, map->player.img, x
+				* SIZE, y * SIZE));
+	else if (is_coll(map, x, y))
+		mlx_put_image_to_window(map->mlx, map->win, map->coll.img, x
+			* SIZE, y * SIZE);
+	else if (is_exit(map, x, y))
+		mlx_put_image_to_window(map->mlx, map->win, map->exit.img, x
+			* SIZE, y * SIZE);
 }
 
 void	display_game(t_game *map)
@@ -88,38 +83,17 @@ void	display_game(t_game *map)
 	{
 		x = 0;
 		while (x < map->width)
-		{
-			mlx_put_image_to_window(map->mlx, map->win, map->empty.img, x * SIZE, y * SIZE);
-			if (is_wall(map, x, y))
-				mlx_put_image_to_window(map->mlx, map->win, map->wall.img, x * SIZE, y * SIZE);
-			else if (is_player(map, x, y))
-				(mlx_put_image_to_window(map->mlx, map->win, map->player.img, x * SIZE, y * SIZE));
-			else if (is_coll(map, x, y))
-				mlx_put_image_to_window(map->mlx, map->win, map->coll.img, x * SIZE, y * SIZE);
-			else if (is_exit(map, x, y))
-				mlx_put_image_to_window(map->mlx, map->win, map->exit.img, x * SIZE, y * SIZE);
-			x++;
-		}
+			mlx_put_images(map, x++, y);
 		y++;
 	}
 }
 
-bool	game(t_game *map)
+void	game(t_game *map)
 {
-	map->mlx = mlx_init();
-	if (!map->mlx)
-		return (false);
-	map->win = mlx_new_window(map->mlx, map->width * SIZE, map->length * SIZE, "so_long");
-	if (!map->win)
-	{
-		mlx_destroy_display(map->mlx);
-		free(map->mlx);
-		return (false);
-	}
 	if (init_img(map) == false)
-		return (false);
+		exit((destroy_all(map, PERROR), 1));
 	display_game(map);
 	mlx_key_hook(map->win, keyboard, map);
 	mlx_loop(map->mlx);
-	return (true);
+	exit((destroy_all(map, PERROR), 1));
 }

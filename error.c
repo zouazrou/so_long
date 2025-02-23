@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:19:38 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/21 21:01:54 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:19:28 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ void	destroy_all(t_game *map, int err)
 	}
 	if (map->grid)
 		free_grid(&map->grid, map->length);
-	if (err == 1)
-		exit ((perror("Error :"), 1));
-	if (err == 2)
-		exit (1);
-	exit(0);
+	if (err == PERROR)
+		exit ((perror("Error "), EXIT_FAILURE));
+	if (err == MAP)
+		exit (EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
 void	free_grid(char ***grid, int length)
@@ -67,15 +67,6 @@ void	free_grid(char ***grid, int length)
 	i = length;
 	while (i >= 0)
 		safe_free(&(*grid)[i--]);
-	free	(*grid);
+	free(*grid);
 	*grid = NULL;
 }
-
-// void	handling_errors(t_game *map, char *str, int err)
-// {
-	// free_grid(&map->grid, map->length);
-// 	destroy_all(map);
-// 	if (err = 1)
-// 		exit ((ft_putstr_fd(str, 2), 1));
-// 	exit(0);
-// }
