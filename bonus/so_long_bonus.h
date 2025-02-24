@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:49 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/24 14:37:30 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:38:22 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
-# include "./get_next_line/get_next_line.h"
-# include "./libft/libft.h"
-# include "minilibx-linux/mlx.h"
+# include "../get_next_line/get_next_line.h"
+# include "../libft/libft.h"
+# include "../minilibx-linux/mlx.h"
 # include <X11/keysym.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
+#include <limits.h>
 
 # define PERROR 1
 # define MAP 2
@@ -49,6 +50,9 @@ typedef struct s_game
 	int		moves;
 	t_info	wall;
 	t_info	player;
+	t_info	frame2;
+	t_info	frame3;
+	t_info	frame4;
 	t_info	exit;
 	t_info	empty;
 	t_info	coll;
@@ -63,6 +67,7 @@ bool		is_wall(t_game *map, int x, int y);
 bool		is_coll(t_game *map, int x, int y);
 bool		is_player(t_game *map, int x, int y);
 
+void		put_moves(t_game *map);
 
 int			ft_length(char *file);
 bool		is_valid_map(t_game *map, char ***gg);

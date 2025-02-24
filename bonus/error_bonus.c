@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   error_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:19:38 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/24 14:41:29 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:47:42 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 bool	check_path(char **grid, int l, int w)
 {
@@ -32,8 +32,20 @@ bool	check_path(char **grid, int l, int w)
 	return (true);
 }
 
+void	destroy_frames(t_game *map)
+{
+	if (map->frame2.img)
+		mlx_destroy_image(map->mlx, map->frame2.img);
+	if (map->frame3.img)
+		mlx_destroy_image(map->mlx, map->frame3.img);
+	if (map->frame4.img)
+		mlx_destroy_image(map->mlx, map->frame4.img);
+
+}
+
 void	destroy_all(t_game *map, int err)
 {
+	destroy_frames(map);
 	if (map->wall.img)
 		mlx_destroy_image(map->mlx, map->wall.img);
 	if (map->player.img)
