@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:52 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/24 09:32:00 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:53:10 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	flood_fill(char **grid, int x, int y)
 {
-	if (grid[y][x] == '1' || grid[y][x] == 'X')
+	if (grid[y][x] == '1' || grid[y][x] == 'X' || grid[y][x] == 'N')
 		return ;
 	grid[y][x] = 'X';
 	flood_fill(grid, x + 1, y);
@@ -30,7 +30,7 @@ bool	check_inside_map(t_game *map, char *row, int index, int len)
 	i = -1;
 	while (++i < len)
 	{
-		if (row[i] == '1' || row[i] == '0')
+		if (row[i] == '1' || row[i] == '0' || row[i] == 'N')
 			continue ;
 		else if (row[i] == 'C')
 			map->coll.amount++;
@@ -81,7 +81,7 @@ bool	is_valid_map(t_game *map, char ***gg)
 		return (free_grid(gg, map->length), false);
 	while (++i < map->length)
 	{
-		if (ft_strlen(map->grid[i]) - 1 != map->width)
+		if ((int)(ft_strlen(map->grid[i]) - 1) != map->width)
 			return (free_grid(gg, map->length), false);
 		if (!is_valid_row(map, i, map->width, (i == 0 || i == map->length - 1)))
 			return (free_grid(gg, map->length), false);

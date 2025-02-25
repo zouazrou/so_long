@@ -6,16 +6,20 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:45 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/24 09:59:21 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:53:58 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
+bool	is_enemy(t_game *map, int x, int y)
+{
+	return (map->grid[y][x] == 'N');
+}
+
 void	check_extension(char *filename)
 {
 	char	*extension;
-	int		len;
 	int		i;
 	int		j;
 
@@ -43,6 +47,7 @@ void	init_fields(t_game *map)
 	map->coll.amount = 0;
 	map->exit.amount = 0;
 	map->player.img = NULL;
+	map->enemy.img = NULL;
 	map->frame2.img = NULL;
 	map->frame3.img = NULL;
 	map->frame4.img = NULL;
@@ -57,8 +62,6 @@ void	init_fields(t_game *map)
 void	init_map(t_game *map, char ***gg, int fd)
 {
 	char	*line;
-	char	**grid;
-	int		width;
 	int		y;
 
 	init_fields(map);

@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:19:38 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/24 14:47:42 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:00:27 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,14 @@ bool	check_path(char **grid, int l, int w)
 
 void	destroy_frames(t_game *map)
 {
+	if (map->player.img)
+		mlx_destroy_image(map->mlx, map->player.img);
 	if (map->frame2.img)
 		mlx_destroy_image(map->mlx, map->frame2.img);
 	if (map->frame3.img)
 		mlx_destroy_image(map->mlx, map->frame3.img);
 	if (map->frame4.img)
 		mlx_destroy_image(map->mlx, map->frame4.img);
-
 }
 
 void	destroy_all(t_game *map, int err)
@@ -48,8 +49,8 @@ void	destroy_all(t_game *map, int err)
 	destroy_frames(map);
 	if (map->wall.img)
 		mlx_destroy_image(map->mlx, map->wall.img);
-	if (map->player.img)
-		mlx_destroy_image(map->mlx, map->player.img);
+	if (map->enemy.img)
+		mlx_destroy_image(map->mlx, map->enemy.img);
 	if (map->coll.img)
 		mlx_destroy_image(map->mlx, map->coll.img);
 	if (map->exit.img)

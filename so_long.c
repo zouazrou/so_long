@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:45 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/23 14:38:49 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:04:28 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	check_extension(char *filename)
 {
 	char	*extension;
-	int		len;
 	int		i;
 	int		j;
 
@@ -54,8 +53,6 @@ void	init_fields(t_game *map)
 void	init_map(t_game *map, char ***gg, int fd)
 {
 	char	*line;
-	char	**grid;
-	int		width;
 	int		y;
 
 	init_fields(map);

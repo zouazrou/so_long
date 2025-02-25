@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:15:43 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/24 14:39:18 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:59:59 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	put_moves(t_game *map)
 {
-	char *nbr;
+	char	*nbr;
 
 	mlx_put_image_to_window(map->mlx, map->win, map->wall.img, 0
 		* SIZE, 0 * SIZE);
@@ -25,8 +25,10 @@ void	put_moves(t_game *map)
 	mlx_put_image_to_window(map->mlx, map->win, map->wall.img, 3
 		* SIZE, 0 * SIZE);
 	if (map->moves != INT_MAX)
-		nbr = ft_itoa(map->moves++);
-	mlx_string_put(map->mlx, map->win, 0.1 * SIZE, 0.5 * SIZE, 0xffffff, "moves : ");
+		map->moves++;
+	nbr = ft_itoa(map->moves);
+	mlx_string_put(map->mlx, map->win, 0.1 * SIZE, 0.5 * SIZE,
+		0xffffff, "moves : ");
 	mlx_string_put(map->mlx, map->win, 1.5 * SIZE, 0.5 * SIZE, 0xffffff, nbr);
 	safe_free(&nbr);
 }
@@ -63,9 +65,7 @@ void	move(t_game *map, t_coord new)
 		do_move(map, curr, new);
 	}
 	else if (is_empty_sp(map, new.x, new.y))
-	{
 		do_move(map, curr, new);
-	}
 	else if (is_exit(map, new.x, new.y))
 	{
 		if (!map->coll.amount)
@@ -74,6 +74,11 @@ void	move(t_game *map, t_coord new)
 			destroy_all(map, 0);
 		}
 		do_move(map, curr, new);
+	}
+	else if (is_enemy(map, new.x, new.y))
+	{
+		ft_putendl_fd("Game Over! but i know you're testing my game :)", 1);
+		destroy_all(map, 0);
 	}
 }
 
@@ -95,8 +100,6 @@ void	do_op(t_game *map, char direction)
 
 int	keyboard(int keysym, t_game *map)
 {
-	static int	moves;
-
 	if (keysym == XK_Escape)
 		destroy_all(map, false);
 	else if (keysym == XK_Up || keysym == XK_w)

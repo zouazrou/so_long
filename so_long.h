@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:49 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/24 14:37:30 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:04:58 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ bool		is_wall(t_game *map, int x, int y);
 bool		is_coll(t_game *map, int x, int y);
 bool		is_player(t_game *map, int x, int y);
 
+void		destroy_all(t_game *map, int err);
+int			close_win(t_game *map);
+void		free_grid(char ***grid, int length);
+void		safe_free(char **ptr);
 
 int			ft_length(char *file);
 bool		is_valid_map(t_game *map, char ***gg);
-void		safe_free(char **ptr);
 int			keyboard(int keysym, t_game *map);
-void		free_grid(char ***grid, int length);
-void		destroy_all(t_game *map, int err);
 void		flood_fill(char **grid, int x, int y);
 bool		check_path(char **grid, int l, int w);
 void		do_op(t_game *map, char direction);

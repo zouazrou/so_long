@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:52 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/23 15:15:10 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:05:14 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ bool	is_valid_map(t_game *map, char ***gg)
 		return (free_grid(gg, map->length), false);
 	while (++i < map->length)
 	{
-		if (ft_strlen(map->grid[i]) - 1 != map->width)
+		if ((int)(ft_strlen(map->grid[i]) - 1) != map->width)
 			return (free_grid(gg, map->length), false);
 		if (!is_valid_row(map, i, map->width, (i == 0 || i == map->length - 1)))
 			return (free_grid(gg, map->length), false);

@@ -1,22 +1,55 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+
+CFLAGS = -Wall -Wextra -Werror
+
+FLAG_MLX = -lXext -lX11
+
+LIBFT = libft/libft.a
+
+LIBMLX_PATH = minilibx-linux/
+
+LIBMLX = $(LIBMLX_PATH)libmlx.a
+
+SRC = $(addprefix get_next_line/, get_next_line.c get_next_line_utils.c) \
+	game.c do_op.c error.c utils.c check_position.c so_long.c
+
+SRC_BONUS = $(addprefix get_next_line/, get_next_line.c get_next_line_utils.c) \
+			$(addprefix bonus/, game_bonus.c do_op_bonus.c error_bonus.c \
+				utils_bonus.c utils2_bonus.c check_position_bonus.c so_long_bonus.c)
+
+OBJ = $(SRC:.c=.o)
+OBJ_BONUS = $(SRC_BONUS:.c=.o)
+
 
 NAME = so_long
-NAME_BNS = so_long_bonus
+NAME_BONUS = so_long_bonus
+
 
 all : $(NAME)
 
-$(NAME) :
-	$(CC) -g get_next_line/*.c game.c do_op.c error.c utils.c check_position.c so_long.c libft/libft.a -L./minilibx-linux -lmlx_Linux -I./minilibx-linux -lXext -lX11 -lm -lz -o $(NAME)
+$(NAME) : $(OBJ) $(LIBFT) $(LIBMLX)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LIBMLX) $(FLAG_MLX) -o $(NAME)
 
-bonus : $(NAME_BNS)
+$(LIBMLX) :
+	make -C $(LIBMLX_PATH)
 
-$(NAME_BNS) :
-	$(CC) -g get_next_line/*.c bonus/game_bonus.c bonus/do_op_bonus.c bonus/error_bonus.c bonus/utils_bonus.c bonus/check_position_bonus.c bonus/so_long_bonus.c libft/libft.a -L./minilibx-linux -lmlx_Linux -I./minilibx-linux -lXext -lX11 -lm -lz -o $(NAME_BNS)
+$(LIBFT) :
+	make -C libft
 
+bonus : $(NAME_BONUS)
 
+$(NAME_BONUS) : $(OBJ_BONUS) $(LIBFT) $(LIBMLX)
+	$(CC)  $(OBJ_BONUS) $(LIBFT) $(LIBMLX) $(FLAG_MLX) -o $(NAME_BONUS)
 
 clean :
-	rm $(NAME) $(NAME_BNS)
-re : clean all
-.PHONY : all clean bonus
+	rm -f $(OBJ) $(OBJ_BONUS)
+	make -C libft clean
+
+fclean : clean
+	rm -f $(NAME) $(NAME_BONUS)
+	make -C libft fclean
+	make -C $(LIBMLX_PATH) clean
+
+re : fclean all
+
+.PHONY : all clean fclean re bonus

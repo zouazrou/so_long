@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 11:15:43 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/23 15:18:54 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:58:18 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,16 @@ void	do_op(t_game *map, char direction)
 	move(map, new);
 }
 
+int	close_win(t_game *map)
+{
+	destroy_all(map, 0);
+	return (0);
+}
+
 int	keyboard(int keysym, t_game *map)
 {
-	static int	moves;
-
 	if (keysym == XK_Escape)
-		destroy_all(map, false);
+		destroy_all(map, 0);
 	else if (keysym == XK_Up || keysym == XK_w)
 		do_op(map, 'u');
 	else if (keysym == XK_Down || keysym == XK_s)

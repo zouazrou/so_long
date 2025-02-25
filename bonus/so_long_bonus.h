@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:49 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/24 14:38:22 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:05:32 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include <limits.h>
+# include <limits.h>
 
 # define PERROR 1
 # define MAP 2
@@ -50,6 +50,7 @@ typedef struct s_game
 	int		moves;
 	t_info	wall;
 	t_info	player;
+	t_info	enemy;
 	t_info	frame2;
 	t_info	frame3;
 	t_info	frame4;
@@ -60,21 +61,22 @@ typedef struct s_game
 
 # define SIZE 32
 
-//
 bool		is_exit(t_game *map, int x, int y);
 bool		is_empty_sp(t_game *map, int x, int y);
 bool		is_wall(t_game *map, int x, int y);
 bool		is_coll(t_game *map, int x, int y);
 bool		is_player(t_game *map, int x, int y);
+bool		is_enemy(t_game *map, int x, int y);
+
+void		destroy_all(t_game *map, int err);
+int			close_win(t_game *map);
+void		free_grid(char ***grid, int length);
+void		safe_free(char **ptr);
 
 void		put_moves(t_game *map);
-
 int			ft_length(char *file);
 bool		is_valid_map(t_game *map, char ***gg);
-void		safe_free(char **ptr);
 int			keyboard(int keysym, t_game *map);
-void		free_grid(char ***grid, int length);
-void		destroy_all(t_game *map, int err);
 void		flood_fill(char **grid, int x, int y);
 bool		check_path(char **grid, int l, int w);
 void		do_op(t_game *map, char direction);

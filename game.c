@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:13:01 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/23 15:00:51 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:09:58 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ bool	init_img_2(t_game *map)
 			&y);
 	if (!map->coll.img)
 		return (false);
-	map->player.img = mlx_xpm_file_to_image(map->mlx, "./textures/player1.xpm",
+	map->player.img = mlx_xpm_file_to_image(map->mlx, "./textures/player.xpm",
 			&x, &y);
 	if (!map->player.img)
 		return (false);
@@ -93,6 +93,7 @@ void	game(t_game *map)
 	if (init_img(map) == false)
 		exit((destroy_all(map, PERROR), 1));
 	display_game(map);
+	mlx_hook(map->win, 17, 0, close_win, map);
 	mlx_key_hook(map->win, keyboard, map);
 	mlx_loop(map->mlx);
 	exit((destroy_all(map, PERROR), 1));
