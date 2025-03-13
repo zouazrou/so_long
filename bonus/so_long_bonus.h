@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:49 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/25 16:05:32 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:28:03 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
-# include "../minilibx-linux/mlx.h"
+# include "/usr/include/minilibx-linux/mlx.h"
 # include <X11/keysym.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -73,6 +73,7 @@ int			close_win(t_game *map);
 void		free_grid(char ***grid, int length);
 void		safe_free(char **ptr);
 
+bool		init_img(t_game *map);
 void		put_moves(t_game *map);
 int			ft_length(char *file);
 bool		is_valid_map(t_game *map, char ***gg);

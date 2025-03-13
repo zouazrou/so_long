@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:13:01 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/25 16:06:40 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:46:58 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	animation(t_game *param)
 
 	if (frame-- != 0)
 		return (0);
-	frame = 3000;
+	frame = 10000;
 	if (ptr == param->player.img)
 		ptr = param->frame2.img;
 	else if (ptr == param->frame2.img)

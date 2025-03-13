@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:45 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/25 15:53:58 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:33:22 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,21 @@ bool	is_enemy(t_game *map, int x, int y)
 void	check_extension(char *filename)
 {
 	char	*extension;
-	int		i;
-	int		j;
+	int		idx_ext;
+	int		idx_fnm;
 
 	extension = ".ber";
-	i = 0;
-	j = ft_strlen(filename) - 4;
-	if (j <= 0)
-		exit((ft_putendl_fd("Error : File name must end with '.ber'", 2), 1));
-	while (filename[j] && extension[i])
+	idx_ext = 4;
+	idx_fnm = ft_strlen(filename);
+	while (idx_ext && idx_fnm)
 	{
-		if (filename[j] != extension[i])
+		if (filename[--idx_fnm] != extension[--idx_ext])
 			exit((ft_putendl_fd("Error : File name must end with '.ber'", 2),
 					1));
-		j++;
-		i++;
 	}
-	if (filename[j])
-		exit((ft_putendl_fd("Error : File name must end with '.ber'", 2), 1));
+	if (idx_ext == 0 && idx_fnm != 0 && filename[--idx_fnm] != '/')
+		return ;
+	exit((ft_putendl_fd("Error : File name must end with '.ber'", 2), 1));
 }
 
 void	init_fields(t_game *map)

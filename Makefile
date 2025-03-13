@@ -1,12 +1,12 @@
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -g -Wall -Wextra -Werror
 
 FLAG_MLX = -lXext -lX11
 
 LIBFT = libft/libft.a
 
-LIBMLX_PATH = minilibx-linux/
+LIBMLX_PATH = /usr/include/minilibx-linux/
 
 LIBMLX = $(LIBMLX_PATH)libmlx.a
 
@@ -30,16 +30,13 @@ all : $(NAME)
 $(NAME) : $(OBJ) $(LIBFT) $(LIBMLX)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LIBMLX) $(FLAG_MLX) -o $(NAME)
 
-$(LIBMLX) :
-	make -C $(LIBMLX_PATH)
-
 $(LIBFT) :
 	make -C libft
 
 bonus : $(NAME_BONUS)
 
 $(NAME_BONUS) : $(OBJ_BONUS) $(LIBFT) $(LIBMLX)
-	$(CC)  $(OBJ_BONUS) $(LIBFT) $(LIBMLX) $(FLAG_MLX) -o $(NAME_BONUS)
+	$(CC) $(CFLAGS) $(OBJ_BONUS) $(LIBFT) $(LIBMLX) $(FLAG_MLX) -o $(NAME_BONUS)
 
 clean :
 	rm -f $(OBJ) $(OBJ_BONUS)
@@ -48,7 +45,6 @@ clean :
 fclean : clean
 	rm -f $(NAME) $(NAME_BONUS)
 	make -C libft fclean
-	make -C $(LIBMLX_PATH) clean
 
 re : fclean all
 
