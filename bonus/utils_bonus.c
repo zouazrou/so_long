@@ -6,22 +6,11 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:52 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/03/14 17:47:10 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/03/16 23:51:33 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
-
-void	flood_fill(char **grid, int x, int y)
-{
-	if (grid[y][x] == '1' || grid[y][x] == 'X' || grid[y][x] == 'N')
-		return ;
-	grid[y][x] = 'X';
-	flood_fill(grid, x + 1, y);
-	flood_fill(grid, x - 1, y);
-	flood_fill(grid, x, y + 1);
-	flood_fill(grid, x, y - 1);
-}
 
 bool	check_inside_map(t_game *map, char *row, int index, int len)
 {

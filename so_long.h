@@ -6,13 +6,9 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:49 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/03/16 21:54:11 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/03/16 23:50:15 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// cc animation_bonus.o check_position_bonus.o do_op_bonus.o error_bonus.o game_bonus.o init_images_bonus.o init_members_bonus.o so_long_bonus.o utils_bonus.o
-//  /usr/include/minilibx-linux/libmlx.a -lXext -lX11
-//  ../get_next_line/get_next_line.o ../get_next_line/get_next_line_utils.o  ../libft/libft.a -o exexe
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
