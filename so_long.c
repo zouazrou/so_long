@@ -6,14 +6,11 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:45 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/03/13 12:10:18 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/03/13 12:32:47 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-// "maps/.ber" size = 12
-// ".ber"	  size = 4
 
 void	check_extension(char *filename)
 {

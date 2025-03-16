@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 10:48:52 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/25 15:53:10 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:47:10 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,10 @@ int	ft_length(char *file)
 		++length;
 	}
 	return (-42);
+}
+
+int	close_win(t_game *map)
+{
+	destroy_all(map, 0);
+	return (0);
 }

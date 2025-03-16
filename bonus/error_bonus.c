@@ -6,7 +6,7 @@
 /*   By: zouazrou <zouazrou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:19:38 by zouazrou          #+#    #+#             */
-/*   Updated: 2025/02/25 16:00:27 by zouazrou         ###   ########.fr       */
+/*   Updated: 2025/03/16 23:28:00 by zouazrou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,33 @@ bool	check_path(char **grid, int l, int w)
 	return (true);
 }
 
-void	destroy_frames(t_game *map)
+void	destroy_images(void *mlx, void ***ptr, int size)
 {
-	if (map->player.img)
-		mlx_destroy_image(map->mlx, map->player.img);
-	if (map->frame2.img)
-		mlx_destroy_image(map->mlx, map->frame2.img);
-	if (map->frame3.img)
-		mlx_destroy_image(map->mlx, map->frame3.img);
-	if (map->frame4.img)
-		mlx_destroy_image(map->mlx, map->frame4.img);
+	int	i;
+
+	i = 0;
+	if ((*ptr) == NULL)
+		return ;
+	while (i < size)
+	{
+		if ((*ptr)[i])
+			mlx_destroy_image(mlx, (*ptr)[i]);
+		i++;
+	}
+	free(*ptr);
 }
 
 void	destroy_all(t_game *map, int err)
 {
-	destroy_frames(map);
-	if (map->wall.img)
-		mlx_destroy_image(map->mlx, map->wall.img);
-	if (map->enemy.img)
-		mlx_destroy_image(map->mlx, map->enemy.img);
-	if (map->coll.img)
-		mlx_destroy_image(map->mlx, map->coll.img);
-	if (map->exit.img)
-		mlx_destroy_image(map->mlx, map->exit.img);
-	if (map->empty.img)
-		mlx_destroy_image(map->mlx, map->empty.img);
+	if (err != MAP)
+	{
+		destroy_images(map->mlx, &map->player.img, map->player.nb_frm);
+		destroy_images(map->mlx, &map->wall.img, map->wall.nb_frm);
+		destroy_images(map->mlx, &map->enemy.img, map->enemy.nb_frm);
+		destroy_images(map->mlx, &map->coll.img, map->coll.nb_frm);
+		destroy_images(map->mlx, &map->exit.img, map->exit.nb_frm);
+		destroy_images(map->mlx, &map->empty.img, map->empty.nb_frm);
+	}
 	if (map->win)
 		mlx_destroy_window(map->mlx, map->win);
 	if (map->mlx)
@@ -79,7 +81,33 @@ void	free_grid(char ***grid, int length)
 
 	i = length;
 	while (i >= 0)
-		safe_free(&(*grid)[i--]);
+		free((*grid)[i--]);
 	free(*grid);
 	*grid = NULL;
+}
+
+void	check_handling_errors(int ac, char **av, t_game *map)
+{
+	char	**gg;
+	int		fd;
+
+	if (ac != 2)
+		exit(1);
+	check_extension(av[1]);
+	map->length = ft_length(av[1]);
+	if (map->length < 3)
+		exit((ft_putendl_fd("Error : map is not valid", 2), EXIT_FAILURE));
+	gg = malloc((map->length + 1) * sizeof(char *));
+	if (!gg)
+		exit((perror("Error"), 1));
+	map->grid = malloc((map->length + 1) * sizeof(char *));
+	if (!map->grid)
+		exit((free_grid(&gg, map->length), perror("Error"), 1));
+	fd = open(av[1], O_RDWR);
+	if (fd == -1)
+		exit((perror("Error"), 1));
+	init_map(map, &gg, fd);
+	if (false == is_valid_map(map, &gg))
+		exit((ft_putendl_fd("Error : map is not valid", 2), destroy_all(map,
+					MAP), 1));
 }
